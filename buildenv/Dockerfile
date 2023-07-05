@@ -14,4 +14,4 @@ RUN apt-get install -y grub-common
 VOLUME /root/env
 WORKDIR /root/env
 
-CMD [ "nasm", "-f", "bin", "./src/boot.asm", "-o", "./build/boot.bin"]
+CMD ["make"]

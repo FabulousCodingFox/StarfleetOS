@@ -20,9 +20,22 @@ step2:
     mov ss, ax
     mov sp, 0x7c00
 
-    ; Print 'Hello World'
-    sti
-    mov si, message
+    mov ah, 2 ; READ SECTOR COMMND
+    mov al, 1 ; ONE SECOR TO READ
+    mov ch, 0 ; Cylinder low eight bits
+    mov cl, 2 ; Read sector two
+    mov dh, 0 ; Head number
+    mov bx, buffer
+    int 0x13
+    jc error
+
+    mov si, buffer
+    call print
+
+    jmp $
+
+error:
+    mov si, error_message
     call print
     jmp $
 
@@ -42,7 +55,9 @@ print_char:
     int 0x10
     ret
 
-message: db 'Loaded StarfleetOS Bootloader', 0
+error_message: db 'Failed to laod sector', 0
 
 times 510-($ - $$) db 0
 dw 0xAA55
+
+buffer:
