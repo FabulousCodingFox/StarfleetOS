@@ -1,4 +1,6 @@
-FILES = build/kernel.asm.o
+FILES = build/kernel.asm.o build/kernel.o
+INCLUDES = -I src/intf/
+FLAGS = -g -fno-pie -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
 
 all: bin/boot.bin bin/kernel.bin
 	dd if=bin/boot.bin >> bin/os.bin
@@ -7,13 +9,16 @@ all: bin/boot.bin bin/kernel.bin
 
 bin/kernel.bin: $(FILES)
 	ld -m elf_i386 -g -relocatable $(FILES) -o build/kernelfull.o
-	gcc -m32 -T src/linker.ld -o bin/kernel.bin -ffreestanding -nostdlib build/kernelfull.o
+	gcc -m32 $(FLAGS) -T src/linker.ld -o bin/kernel.bin -ffreestanding -nostdlib -O0 build/kernelfull.o
 
 bin/boot.bin: src/impl/x86_64/boot/boot.asm bin/boot.bin
 	nasm -f bin src/impl/x86_64/boot/boot.asm -o bin/boot.bin
 
 build/kernel.asm.o: src/impl/x86_64/kernel.asm build/kernel.asm.o
 	nasm -f elf32 -g src/impl/x86_64/kernel.asm -o build/kernel.asm.o
+
+build/kernel.o: src/impl/kernel/kernel.c
+	gcc -m32 $(INCLUDES) $(FLAGS) -std=gnu99 -c src/impl/kernel/kernel.c -o build/kernel.o
 
 clean:
 	rm -rf bin/boot.bin
