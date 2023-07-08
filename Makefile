@@ -20,6 +20,7 @@ clean:
 	rm -rf bin/kernel.bin
 	rm -rf bin/os.bin
 	rm -rf $(FILES)
+	rm -rf build/kernelfull.bin
 
 #kernel_source_files := $(shell find src/impl/kernel -name *.c)
 #kernel_object_files := $(patsubst src/impl/kernel/%.c, build/kernel/%.o, $(kernel_source_files))
