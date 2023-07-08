@@ -1,9 +1,9 @@
 ENTRY(_start)
 OUTPUT_FORMAT(binary)
-SECTIONS{
+SECTIONS
+{
     . = 1M;
-
-    .text :
+    .text : 
     {
         *(.text)
     }
