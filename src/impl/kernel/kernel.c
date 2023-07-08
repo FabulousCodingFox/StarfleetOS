@@ -1,11 +1,11 @@
 #include "kernel.h"
-#include <stdint.h>
-
-uint16_t terminal_make_char(char c, char color){
-    return (color << 8) | c;
-}
+#include "debug_print.h"
 
 void kernel_main(){
-    uint16_t* video_mem = (uint16_t*)(0xB8000);
-    video_mem[0] = terminal_make_char('B', 3);
+    debugPrint_clearScreen();
+    int successColor = debugPrint_colorBuilder(DEBUGPRINT_COLOR_GREEN, DEBUGPRINT_COLOR_BLACK);
+    //int errorColor = debugPrint_colorBuilder(DEBUGPRINT_COLOR_WHITE, DEBUGPRINT_COLOR_DARK_RED);
+    //int logColor = debugPrint_colorBuilder(DEBUGPRINT_COLOR_DARK_WHITE, DEBUGPRINT_COLOR_BLACK);
+
+    debugPrint_println("Starting Kernel...", successColor);
 }
