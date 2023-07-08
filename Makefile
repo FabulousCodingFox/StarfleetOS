@@ -1,7 +1,7 @@
 GCC_FLAGS = -g -fno-pie -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
 LD_INCLUDES = -I src/intf/
 
-KERNEL_ASM_FILES = $(strip $(patsubst src/impl/x86_64/%.asm, build/x86_64/%.asm.o, src/impl/x86_64/kernel.asm))
+KERNEL_ASM_FILES = $(strip $(patsubst src/impl/%.asm, build/%.asm.o, src/impl/x86_64/kernel.asm src/impl/kernel/idt/idt.asm))
 KERNEL_BOOTLOADER_FILES = $(strip $(patsubst src/impl/x86_64/boot/%.asm, bin/%.bin, $(shell find src/impl/x86_64/boot -name *.asm)))
 KERNEL_C_FILES = $(strip $(patsubst src/impl/kernel/%.c, build/kernel/%.o, $(shell find src/impl/kernel -name *.c)))
 ALL_COMPILEABLE_FILES = $(strip $(KERNEL_ASM_FILES) $(KERNEL_C_FILES))
@@ -22,7 +22,7 @@ $(KERNEL_BOOTLOADER_FILES): bin/%.bin : src/impl/x86_64/boot/%.asm
 
 $(KERNEL_ASM_FILES): build/x86_64/%.asm.o : src/impl/x86_64/%.asm
 	mkdir -p $(dir $@)
-	nasm -f elf32 -g $(patsubst build/x86_64/%.asm.o, src/impl/x86_64/%.asm, $@) -o $@
+	nasm -f elf32 -g $(patsubst build/%.asm.o, src/impl/%.asm, $@) -o $@
 
 $(KERNEL_C_FILES): build/kernel/%.o : src/impl/kernel/%.c
 	mkdir -p $(dir $@)

@@ -33,7 +33,7 @@ void debugPrint_printchar(char c, char color){
     }
 }
 
-void debugPrint_print(char text[], char color){
+void debugPrint_print(const char* text, char color){
     size_t i = 0;
     while(text[i])
     {
@@ -42,7 +42,7 @@ void debugPrint_print(char text[], char color){
     }
 }
 
-void debugPrint_println(char text[], char color){
+void debugPrint_println(const char* text, char color){
     if(terminal_col != 0){
         terminal_row++;
         terminal_col = 0;

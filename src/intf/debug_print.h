@@ -20,14 +20,18 @@
 #define DEBUGPRINT_COLOR_ORANGE 14
 #define DEBUGPRINT_COLOR_WHITE 15
 
+#define DEBUGPRINT_PRESET_SUCCESS 10
+#define DEBUGPRINT_PRESET_LOG 7
+#define DEBUGPRINT_PRESET_ERROR 207
+
 char debugPrint_colorBuilder(int color, int bgColor);
 
 void debugPrint_setChar(int x, int y, char c, char color);
 
 void debugPrint_clearScreen();
 
-void debugPrint_println(char text[], char color);
+void debugPrint_println(const char* text, char color);
 
-void debugPrint_print(char text[], char color);
+void debugPrint_print(const char* text, char color);
 
 void debugPrint_printchar(char c, char color);

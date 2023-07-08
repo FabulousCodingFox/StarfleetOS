@@ -1,11 +1,13 @@
 #include "kernel.h"
 #include "debug_print.h"
+#include "idt/idt.h"
 
 void kernel_main(){
     debugPrint_clearScreen();
-    int successColor = debugPrint_colorBuilder(DEBUGPRINT_COLOR_GREEN, DEBUGPRINT_COLOR_BLACK);
-    //int errorColor = debugPrint_colorBuilder(DEBUGPRINT_COLOR_WHITE, DEBUGPRINT_COLOR_DARK_RED);
-    //int logColor = debugPrint_colorBuilder(DEBUGPRINT_COLOR_DARK_WHITE, DEBUGPRINT_COLOR_BLACK);
+    debugPrint_println("Starting Kernel...", DEBUGPRINT_PRESET_SUCCESS);
 
-    debugPrint_println("Starting Kernel...", successColor);
+    debugPrint_println("Loading IDT tables...", DEBUGPRINT_PRESET_LOG);
+    idt_init();
+    
+    debugPrint_println("Loaded Kernel successfully!", DEBUGPRINT_PRESET_SUCCESS);
 }
