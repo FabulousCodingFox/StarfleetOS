@@ -3,7 +3,9 @@
         "kernel.h": "c",
         "memory.h": "c",
         "config.h": "c",
-        "idt.h": "c"
+        "idt.h": "c",
+        "heap.h": "c",
+        "kheap.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

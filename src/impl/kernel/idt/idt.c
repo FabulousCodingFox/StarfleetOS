@@ -1,7 +1,7 @@
 #include "idt.h"
 #include "config.h"
-#include "../memory/memory.h"
-#include "../io/io.h"
+#include "memory.h"
+#include "io.h"
 #include "debug_print.h"
 
 struct idt_desc idt_descriptors[STARFLEETOS_TOTAL_INTERRUPTS];
